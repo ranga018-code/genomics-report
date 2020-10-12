@@ -1,0 +1,152 @@
+\begin{thebibliography}{19}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Chen et~al.(2019)Chen, Doddi, Royer, Freschi, Schito, Ezewudo, Kohane,
+  Beam, and Farhat]{CHEN2019356}
+Michael~L. Chen, Akshith Doddi, Jimmy Royer, Luca Freschi, Marco Schito,
+  Matthew Ezewudo, Isaac~S. Kohane, Andrew Beam, and Maha Farhat.
+\newblock Beyond multidrug resistance: Leveraging rare variants with machine
+  and statistical learning models in mycobacterium tuberculosis resistance
+  prediction.
+\newblock \emph{EBioMedicine}, 43:\penalty0 356 -- 369, 2019.
+\newblock ISSN 2352-3964.
+\newblock \doi{https://doi.org/10.1016/j.ebiom.2019.04.016}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S2352396419302506}.
+
+\bibitem[Hu et~al.(2019)Hu, Shen, Albanie, Sun, and
+  Wu]{hu2019squeezeandexcitation}
+Jie Hu, Li~Shen, Samuel Albanie, Gang Sun, and Enhua Wu.
+\newblock Squeeze-and-excitation networks, 2019.
+
+\bibitem[Ioffe and Szegedy(2015)]{43442}
+Sergey Ioffe and Christian Szegedy.
+\newblock Batch normalization: Accelerating deep network training by reducing
+  internal covariate shift.
+\newblock pages 448--456, 2015.
+\newblock URL \url{http://jmlr.org/proceedings/papers/v37/ioffe15.pdf}.
+
+\bibitem[Kingma and Ba(2017)]{kingma2017adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization, 2017.
+
+\bibitem[Loshchilov and Hutter(2017)]{loshchilov2017sgdr}
+Ilya Loshchilov and Frank Hutter.
+\newblock Sgdr: Stochastic gradient descent with warm restarts, 2017.
+
+\bibitem[Loshchilov and Hutter(2019)]{loshchilov2019decoupled}
+Ilya Loshchilov and Frank Hutter.
+\newblock Decoupled weight decay regularization, 2019.
+
+\bibitem[Organization(2019)]{10665-329368}
+World~Health Organization.
+\newblock \emph{Global tuberculosis report 2019}.
+\newblock World Health Organization, 2019.
+
+\bibitem[Paszke et~al.(2019)Paszke, Gross, Massa, Lerer, Bradbury, Chanan,
+  Killeen, Lin, Gimelshein, Antiga, Desmaison, Köpf, Yang, DeVito, Raison,
+  Tejani, Chilamkurthy, Steiner, Fang, Bai, and Chintala]{paszke2019pytorch}
+Adam Paszke, Sam Gross, Francisco Massa, Adam Lerer, James Bradbury, Gregory
+  Chanan, Trevor Killeen, Zeming Lin, Natalia Gimelshein, Luca Antiga, Alban
+  Desmaison, Andreas Köpf, Edward Yang, Zach DeVito, Martin Raison, Alykhan
+  Tejani, Sasank Chilamkurthy, Benoit Steiner, Lu~Fang, Junjie Bai, and Soumith
+  Chintala.
+\newblock Pytorch: An imperative style, high-performance deep learning library,
+  2019.
+
+\bibitem[Pereyra et~al.(2017)Pereyra, Tucker, Chorowski, Łukasz Kaiser, and
+  Hinton]{pereyra2017regularizing}
+Gabriel Pereyra, George Tucker, Jan Chorowski, Łukasz Kaiser, and Geoffrey
+  Hinton.
+\newblock Regularizing neural networks by penalizing confident output
+  distributions, 2017.
+
+\bibitem[Qiao et~al.(2020)Qiao, Wang, Liu, Shen, and
+  Yuille]{qiao2020microbatch}
+Siyuan Qiao, Huiyu Wang, Chenxi Liu, Wei Shen, and Alan Yuille.
+\newblock Micro-batch training with batch-channel normalization and weight
+  standardization, 2020.
+
+\bibitem[Quan et~al.(2017)Quan, Bawa, Foster, Walker, del Ojo, Rathod, Iqbal,
+  Bradley, Mowbray, Walker, Crook, Wyllie, Peto, and Smith]{article}
+T.~Quan, Zharain Bawa, Dona Foster, Tim Walker, Carlos del Ojo, Priti Rathod,
+  Zamin Iqbal, Phelim Bradley, Janet Mowbray, A.~Walker, Derrick Crook, David
+  Wyllie, Timothy Peto, and E.~Smith.
+\newblock Evaluation of whole-genome sequencing for mycobacterial species
+  identification and drug susceptibility testing in a clinical setting: a
+  large-scale prospective assessment of performance against line probe assays
+  and phenotyping.
+\newblock \emph{Journal of Clinical Microbiology}, 56:\penalty0 JCM.01480--17,
+  11 2017.
+\newblock \doi{10.1128/JCM.01480-17}.
+
+\bibitem[Shrivastava et~al.(2016)Shrivastava, Gupta, and
+  Girshick]{shrivastava2016training}
+Abhinav Shrivastava, Abhinav Gupta, and Ross Girshick.
+\newblock Training region-based object detectors with online hard example
+  mining, 2016.
+
+\bibitem[Srivastava et~al.(2014)Srivastava, Hinton, Krizhevsky, Sutskever, and
+  Salakhutdinov]{JMLR:v15:srivastava14a}
+Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan
+  Salakhutdinov.
+\newblock Dropout: A simple way to prevent neural networks from overfitting.
+\newblock \emph{Journal of Machine Learning Research}, 15\penalty0
+  (56):\penalty0 1929--1958, 2014.
+\newblock URL \url{http://jmlr.org/papers/v15/srivastava14a.html}.
+
+\bibitem[Tompson et~al.(2014)Tompson, Goroshin, Jain, LeCun, and
+  Bregler]{DBLP:journals/corr/TompsonGJLB14}
+Jonathan Tompson, Ross Goroshin, Arjun Jain, Yann LeCun, and Christoph Bregler.
+\newblock Efficient object localization using convolutional networks.
+\newblock \emph{CoRR}, abs/1411.4280, 2014.
+\newblock URL \url{http://arxiv.org/abs/1411.4280}.
+
+\bibitem[Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez,
+  Kaiser, and Polosukhin]{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N. Gomez, Lukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need, 2017.
+
+\bibitem[Wu and He(2018)]{wu2018group}
+Yuxin Wu and Kaiming He.
+\newblock Group normalization, 2018.
+
+\bibitem[Yang et~al.(2017)Yang, Niehaus, Walker, Iqbal, Walker, Wilson, Peto,
+  Crook, Smith, Zhu, and Clifton]{10.1093/bioinformatics/btx801}
+Yang Yang, Katherine~E Niehaus, Timothy~M Walker, Zamin Iqbal, A~Sarah Walker,
+  Daniel~J Wilson, Tim E~A Peto, Derrick~W Crook, E~Grace Smith, Tingting Zhu,
+  and David~A Clifton.
+\newblock {Machine learning for classifying tuberculosis drug-resistance from
+  DNA sequencing data}.
+\newblock \emph{Bioinformatics}, 34\penalty0 (10):\penalty0 1666--1671, 12
+  2017.
+\newblock ISSN 1367-4803.
+\newblock \doi{10.1093/bioinformatics/btx801}.
+\newblock URL \url{https://doi.org/10.1093/bioinformatics/btx801}.
+
+\bibitem[Yang et~al.(2019)Yang, Walker, Walker, Wilson, Peto, Crook, Shamout,
+  Consortium, Zhu, and Clifton]{10.1093/bioinformatics/btz067}
+Yang Yang, Timothy~M Walker, A~Sarah Walker, Daniel~J Wilson, Timothy E~A Peto,
+  Derrick~W Crook, Farah Shamout, CRyPTIC Consortium, Tingting Zhu, and David~A
+  Clifton.
+\newblock {DeepAMR for predicting co-occurrent resistance of Mycobacterium
+  tuberculosis}.
+\newblock \emph{Bioinformatics}, 35\penalty0 (18):\penalty0 3240--3249, 01
+  2019.
+\newblock ISSN 1367-4803.
+\newblock \doi{10.1093/bioinformatics/btz067}.
+\newblock URL \url{https://doi.org/10.1093/bioinformatics/btz067}.
+
+\bibitem[Zhang et~al.(2017)Zhang, Ciss{\'{e}}, Dauphin, and
+  Lopez{-}Paz]{DBLP:journals/corr/abs-1710-09412}
+Hongyi Zhang, Moustapha Ciss{\'{e}}, Yann~N. Dauphin, and David Lopez{-}Paz.
+\newblock mixup: Beyond empirical risk minimization.
+\newblock \emph{CoRR}, abs/1710.09412, 2017.
+\newblock URL \url{http://arxiv.org/abs/1710.09412}.
+
+\end{thebibliography}
