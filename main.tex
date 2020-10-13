@@ -32,6 +32,7 @@
 \usepackage{graphicx}
 \usepackage{multirow}
 \graphicspath{{figures/}}
+\LinesNumbered
 
 \title{DeepMDRP: A Multi-task CNN based approach towards resistance prediction in MTB isolates}
 
@@ -79,20 +80,21 @@
 \maketitle
 
 \begin{abstract}
-  In this report we explore the problem of predicting phenotypic susceptibility of MTB isolates
-towards 10 drugs including 4 first line drugs and 4 second line drugs. We experiment with a number
+  In this report we explore the problem of predicting phenotypic susceptibility of \emph{Mycobacterium Tuberculosis (MTB)} isolates
+towards 10 drugs including 4 first line drugs and 6 second line drugs. We experiment with a number
 of statistical models for predicting MTB resistance towards different drugs and propose a Deep Convolutioal
-Neural Network that achieves state of the art results in predicting MTB resistance in all the first and
-second line drugs while achieving competitive performance on other drugs. We also give a detailed report
+Neural Network that achieves state of the art results in predicting MTB resistance in seven out of the ten
+assayed drugs while achieving competitive performance on other drugs. We also give a detailed report
 of several approaches that were critical in the performance of our method while also giving a detailed account
-of approaches that did not perform as well, hoping that it would be helpful to the research community. The source
+of approaches that did not perform as well, hoping that it would be helpful in further research in
+this area. The source
 code for our approach is publicly available at \emph{https://github.com/kpandey008/drug-resistance-prediction}
 \end{abstract}
 
 \section{Introduction}
 
 Tuberculosis is one of the top 10 leading causes of mortality worldwide and the leading cause
-of death from a single infectious agent, caused by the bacillus \emph{Mycobacterium Tuberculosis (MTB)}
+of death from a single infectious agent, caused by the bacillus MTB
 \cite{10665-329368}. To make the situation even more difficult to tackle, there has been a significant rise of
 drug-resistant bacterial strains due to the increasing use of antibacterial drugs. Moroever, the phenotypic
 drug susceptibility test (DST) that determines which drugs are effective towards particular TB infections
@@ -111,17 +113,20 @@ Logistic Regression, Random Forests (RF) and Support Vector Machines (SVM) to pr
 including 4 first line drugs (Rifampicin (RIF), Isoniazid (INH), Ethambutol (EMB), Pyrazinamide (PZA)) and
 6 second line drugs (Streptomycin (STR), Capreomycin (CAP), Ciprofloxacin (CIP), Kanamycin (KAN), Moxifloxacin(MOXI),
 Amikacin (AMK), Ofloxacin (OFX)). \cite{CHEN2019356} pose the resistance prediction problem as a multi-task learning problem where
-they use a Deep neural network (WDNN) to predict resistance of MTB isolates for all the 11 drugs using a single
+they use a Deep neural network (WDNN) to predict resistance of MTB isolates for all the drugs using a single
 neural network. \cite{10.1093/bioinformatics/btz067} pretrain a Deep de-noising autoencoder to learn latent representations over the binary SNP features
 and use the resulting autoencoder in composition with a classifier to predict MTB resistance towards the first-line drugs.\\
 
 In this report, we propose DeepMDRP, a multi-task Deep Convolutional Neural Network (CNN) for predicting resistance of MTB isolates
 towards 10 drugs (excluding CIP). We provide several justifications for our model choice and show that our
 approach outperforms existing approaches when predicting MTB resistance in most first and second line drugs. The rest of
-the report is organized as follows:
+the report is organized as follows: We talk about the core network arhcitecture in Section \ref{section:network}.
+We discuss our experimental results in Section \ref{section:experiments}, final test set performance in
+Section \ref{section:final} and conclude our report by laying a roadmap for future work in 
+Section \ref{section:conclusion}.
 
 \section{Deep MTB Drug Resistance Predictor (DeepMDRP)}
-\label{headings}
+\label{section:network}
 
 In this section we present an overview of our network. As shown in Figure \ref{fig:architecture} our network takes a batch of
 feature vectors as an input of the form $B \times 1 \times d$ where B is the batch size and d is the dimension of the feature
@@ -145,8 +150,9 @@ of each drug in the order: $\{RIF, INH, PZA, EMB, STR, CIP, CAP, AMK, MOXI, OFLX
 The network architecture for the Deep CNN is shown in Figure \ref{fig:architecture}. It takes a $B \times d$ 
 dimensional input where B
 is the batch size and d is a 219 dimensional feature vector. The CNN network consists of four 1-d convolutional blocks
-followed by a fully connected block and a classifier layer. The input B x 219 dimensional feature vector is 
-first reshaped into a B x 1 x 219 dimensional
+followed by a fully connected block and a classifier layer. It is worth noting that the last two
+convolutional blocks use dilated convolutions which gives better empirical performance. 
+The input B x 219 dimensional feature vector is first reshaped into a B x 1 x 219 dimensional
 tensor which is then input to the network. As shown in Figure \ref{fig:architecture}, we use BatchNorm1d \cite{43442}
 and Dropout2d \cite{DBLP:journals/corr/TompsonGJLB14} modules
 to regularize training. We use the ReLU6 activation as opposed to ReLU as it gave better empirical performance
@@ -159,7 +165,7 @@ for the following reasons:
     experiment with transfer learning approaches which have been successfully applied to several problems in 
     vision and
     NLP.
-    Note that this is not possible with a simple deep MLP which is dependent of the size of the input features.
+    Note that this is not possible with a simple deep MLP which is dependent on the size of the input features.
     \item CNN's promote parameter sharing which has two advantages. It allows us to detect recurring patterns in
     sequences and allows for a reduction in the parameter count. This further enables us to build deeper models that
     can capture complex patterns between mutations.
@@ -171,16 +177,19 @@ for the following reasons:
 \subsection{Training and Testing}
 
 The training procedure for our network is described in Algorithm \ref{algo:train}. One
-important aspect of our training algorithm is the use of Mixup \cite{DBLP:journals/corr/abs-1710-09412} data augmentation. As we discuss in the
+important aspect of our training algorithm is the use of Mixup \cite{DBLP:journals/corr/abs-1710-09412} 
+data augmentation. We use a different variant of Mixup in our algorithm as we apply 
+it randomly during training. (See line 4 in \ref{algo:train}).
+As we discuss in the
 experimental details, Mixup leads to an improved overall performance of the network and prevents the
 network from overfitting. We choose the masked binary cross entropy loss as the loss criterion
 as the dataset contains -1 labels for some drugs which needs to be masked during training.
 We use the Adam \cite{kingma2017adam} optimizer for weight update and the gradient updates are made through backpropagating through
-the network. The training Hyperparameters are discussed in section \ref{section:hyper}\\
+the network. The training hyperparameters are discussed in section \ref{section:hyper}\\
 The testing procedure is simple as it involves only a single forward pass of the test sample through
 the trained network.
 
-\begin{algorithm}[H]
+\begin{algorithm}[t]
     \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
     \SetAlgoLined
      \Input{Training set $D$, Initialized model: $M$, Hyperparameters: $\{num\_epochs, \alpha, \eta, \beta_1, \beta_2\}$}
@@ -208,15 +217,23 @@ the trained network.
 \end{algorithm}
 
 \section{Experimental Details}
+\label{section:experiments}
 
 \subsection{Dataset}
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.7]{plot.png}
+  \caption{Distribution of class labels in assayed drugs}
+  \label{fig: class_distribution}
+\end{figure}
 The dataset used for training consists of 3393 samples with 222 features. In the provided dataset some features
 have missing values. More specifically, the features $SNP\_CN\_2714366\_C967A\_V323L\_eis$,
 $SNP\_I\_2713795\_C329T\_inter\_Rv2415c\_eis$, $SNP\_I\_2713872\_C252A\_inter\_Rv2415c\_eis$ have missing values.
 We remove these features from the dataset resulting in 219 binary features (Each feature representing
 a mutation). The targets provided in the dataset also have missing values which we mask during training. We use
 a validation set of 792 samples taken from \cite{CHEN2019356} as the authors in this paper use the same feature set as ours
-to evaluate their model performance.
+to evaluate their model performance. Moroever, the dataset is imbalanced as
+shown in Figure \ref{fig: class_distribution}. We discuss several ways of handling class imbalance in Section \ref{section: imbalance}
 
 \subsection{Implementation Details}
 \label{section:hyper}
@@ -225,9 +242,11 @@ to evaluate their model performance.
 consists of 4 Conv1d layers containing
 {64, 128, 256, 512} filters respectively. Each conv layer is followed by a BatchNorm1d layer and a ReLU6
 activation. The first conv layer also uses a MaxPool1d layer after applying the ReLU6 activation. In the
-last two Conv blocks we use a Dropout2d module with a drop probability of 0.3. The output of the last conv
+last two Conv blocks we use a Dropout2d module with a drop probability of 0.3. We also use
+dilated convolutions with a dilation rate of 2 in the last two conv blocks for capturing better global context.
+The output of the last conv
 block is fed into a AveragePooling layer followed by a flatten operation. The resulting output is then
-fed into a fully-connected layer -> ReLU6 -> BN unit. The final output is then fed into a classifier which
+fed into a fully-connected (FC) layer -> ReLU6 -> BN unit. The final output is then fed into a classifier which
 makes predictions for individual drugs.
 
 \textbf{Training}: We use PyTorch \cite{paszke2019pytorch} for developing the neural net
@@ -235,8 +254,8 @@ framework developmnent and training. We train our DeepCNN predictor for 100 epoc
 using the Adam optimizer. The mixup parameter $\alpha$ is set to 2.0. The initial
 learning rate is set to 0.001 and weight decay to 0.0001. We adjust the learning rate using the Cosine Annealing
 scheduler with warm restarts \cite{loshchilov2017sgdr} ($T_0 = 10$ and $t_{mul}=2$). For computing loss, we use a custom masked
-Binary cross entropy (BCE) loss without any weight balancing. We train the entire system on the Google Colab
-platform.
+Binary cross entropy (BCE) loss without any weight balancing. We train the entire system end-to-end 
+on the Google Colab platform.
 
 \subsection{Ablation Studies}
 For the results in this section, we report the AUC scores on our validation set of 792 isolates.
@@ -264,7 +283,7 @@ Apart from using a Deep-CNN as a model for our experiments we also tried a numbe
   which might improve performance. We denote this model by DeepCNN (WS + GN)
   \item Another variant that we tried is based on using Squeeze and Excitation \cite{hu2019squeezeandexcitation} (SE) units in combination
   with the DeepCNN architecture. We denote this model by DeepCNN-SE.
-  \item Lastly, we tried involved pre-processing the input features using dimensionality reduction
+  \item Lastly, we tried pre-processing the input features using dimensionality reduction
   methods and then using the pre-processed features as inputs to our model.
   We specifically tried two such methods: kernel-PCA and NMF and denote these methods as \emph{DeepCNN-kPCA} and 
   \emph{DeepCNN-NMF} respectively. The dimension of the features using these methods was reduced to 100.
@@ -343,7 +362,9 @@ As evident from the results, masked BCE performs the best among all the variants
 
 
 \subsubsection{Dataset imbalance}
-The training data used for our experiments suffers from the common problem of class imbalance. We hypothesized
+\label{section: imbalance}
+As shown in Figure \ref{fig: class_distribution}, the training data used for our experiments
+suffers from the common problem of class imbalance. We hypothesized
 that some form of weight balancing would be needed during training. Due to this reason, we experimented with
 three types of weight balancing schemes during training.
 \begin{itemize}
@@ -367,7 +388,9 @@ converge so we selected Adam as the final choice for the model.
 
 \subsubsection{Choice of Learning Rate Scheduler}
 We use the Cosine Annealing learning rate scheduler with warm restarts \cite{loshchilov2017sgdr}.
-We also experimented with a Poly learning rate policy and a Step scheduler.
+We also experimented with a Poly learning rate policy and a Step scheduler. However, we did not notice
+any significant improvements/degradation in performance of the model because of changing the learning rate
+scheduler.
 
 \subsubsection{Regularization strategies}
 Since, our training dataset size is relatively small (only 3393) samples, we experiment with a number of
@@ -417,13 +440,23 @@ from the training of the source task trained with a large amount of data. For pr
 Deep-CNN classifier on the DeepAMR \cite{10.1093/bioinformatics/btz067} dataset which consists of 
 8390 samples with 5824 mutations for
 predicing MTB resistance to the four first line drugs. We then fine-tune our classifier on our target
-dataset to predict MTB resistance towards the assayed drugs. The results are shown in Table \ref{table:finetune}
+dataset to predict MTB resistance towards the first-line drugs. The results are shown in Table \ref{table:finetune}
 As evident from the results, transfer learning certainly improves the performance of INH, EMB and PZA as
 compared to its train-from-scratch DeepCNN counterpart.
 
+\subsubsection{Single-drug vs Multi-drug prediction}
+The comparison between the single and multi-drug predcitions for the DeepCNN model are shown in Table \ref{table:sm}
+From the results we observe that Single drug prediction gives better performance for all first line drugs except
+\textit{INH}. However, the performance of all second line drugs degrades except \textit{STR} and \textit{MOXI}.
+We therefore hypothesize that since many isolates were not tested for susceptibility towards second line drugs
+, using multi-drug prediction helps the second-line drug resistance predictions to benefit from the labels
+provided for the first line drugs, thus indicating correlation between the predictions of several drugs. However,
+a more extensive study is required to reaffirm this hypothesis which could be an interesting direction for future
+work.
 
 
 \section{Final Performance}
+\label{section:final}
 \begin{table}[t]
   \begin{minipage}{0.5\linewidth}
   \centering
@@ -452,19 +485,19 @@ compared to its train-from-scratch DeepCNN counterpart.
   \caption{Kaggle Leaderboard scores}
   \begin{tabular}{lllll}
       \toprule
-      \multirow{1}{*}[0em]{Drug} & Avg AUC\\
+      \multirow{1}{*}[0em]{Drug} & Avg AUC & Position\\
       % \addlinespace[1pt]
       \midrule
-      RIF & 98.95 \\
-      INH & 97.99 \\
-      PZA & 92.50 \\
-      EMB & 94.47 \\
-      STR & 96.18 \\
-      CAP & 87.55 \\
-      AMK & 98.05  \\
-      MOXI & 98.08  \\
-      OFLX & 89.94 \\
-      KAN & 93.21  \\
+      RIF & 99.02 & 1\\
+      INH & 97.99 & 1\\
+      PZA & 92.73 & 2\\
+      EMB & 94.47 & 3\\
+      STR & 96.18 & 1\\
+      CAP & 87.55 & 2\\
+      AMK & 98.05 & 1\\
+      MOXI & 98.31 & 1\\
+      OFLX & 89.94 & 1\\
+      KAN & 93.21 & 1\\
       \bottomrule
   \end{tabular}
   \label{table:kaggle_results}
@@ -473,14 +506,16 @@ compared to its train-from-scratch DeepCNN counterpart.
 In this section we compare the results of our multitask DeepCNN based approach with WDNN as specified in \cite{CHEN2019356} as
 this is most relevant to our work. We use the same validation set 
 which is used by \cite{CHEN2019356} in their evaluation. The results are shown in Table \ref{table:compare_sota}. As evident
-from the results, our multi-task method beats the state of the art method performance on the majority 
+from the results, our multi-task method beats the state of the art method performance for the majority 
 of the drugs. We also submitted our evaluations to the Kaggle leaderboard as a part of the ongoing
-competition. The results are shown in Table \ref{table:kaggle_results}. It is worth
+competition. The results with the leaderboard position are shown in Table \ref{table:kaggle_results}. It is worth
 noting that the results submitted to the Kaggle competitions were submitted using multiple
-variants of WDNN256, WDNN512 and DeepCNN.
+variants of WDNN256, WDNN512 and DeepCNN. Not all the details regarding these variants has been included in this
+report.
 
 \section{Conclusion and Future Work}
-In this report we present a novel DeepCNN based method with mixup augmentation
+\label{section:conclusion}
+In this report we present a novel DeepCNN based method with Mixup augmentation
  for predicting drug resistance in MTB isolates. We show that our method achieves
 better performance compared to the state of the art model on multiple first and 
 second line drugs. We also
@@ -492,13 +527,38 @@ we see the following directions as direct extensions to our work.
 \begin{itemize}
   \item More experimentation with multi-head attention based models for modeling correlations
   between mutations.
-  \item Since our dataset contains a lot of unlabeled data for different drugs. It would
+  \item Since our dataset contains a lot of unlabeled data for different drugs, it would
   be interesting to explore the application of semi-supervised learning methods in 
   the multi-label context.
+  \item Exploring the correlation between isolate resistance towards multiple drugs can also 
+  be an interesting direction for future work.
   \item Another direction could be to explore model / checkpoint averaging methods
   as a way to make the model predictions more robust which we have not explored as a part
   of this work.
 \end{itemize}
+
+\begin{table}
+    \centering
+    \caption{Single vs Multi Drug Resistance Prediction using DeepCNN}
+    \begin{tabular}{lllll}
+        \toprule
+        \multirow{1}{*}[0em]{Drug} & Single-drug & Multi-drug\\
+        % \addlinespace[1pt]
+        \midrule
+        RIF & 98.8 & 98.4\\
+        INH & 97.0 & 97.2\\
+        PZA & 91.0 & 89.0\\
+        EMB & 92.1 & 91.6\\
+        STR & 94.9 & 93.8\\
+        CAP & 75.7 & 77.5\\
+        AMK & 91.0 & 97.7\\
+        MOXI & 95.7 & 95.6\\
+        OFLX & 85.3 & 86.9\\
+        KAN & 87.0 & 89.6\\
+        \bottomrule
+    \end{tabular}
+    \label{table:sm}
+  \end{table}
 
 \section{Contributions}
 Kushagra contributed to:
@@ -508,7 +568,7 @@ Kushagra contributed to:
   \item Developing and testing the core network architecture presented in this report
   \item Ablation Studies (choice of loss functions, model variants etc.)
   \item Report Development
-\end{itemize} 
+\end{itemize}
 
 \bibliography{references}
 

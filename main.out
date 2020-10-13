@@ -13,6 +13,7 @@
 \BOOKMARK [3][-]{subsubsection.3.3.5}{Choice of Learning Rate Scheduler}{subsection.3.3}% 13
 \BOOKMARK [3][-]{subsubsection.3.3.6}{Regularization strategies}{subsection.3.3}% 14
 \BOOKMARK [3][-]{subsubsection.3.3.7}{Impact of transfer learning}{subsection.3.3}% 15
-\BOOKMARK [1][-]{section.4}{Final Performance}{}% 16
-\BOOKMARK [1][-]{section.5}{Conclusion and Future Work}{}% 17
-\BOOKMARK [1][-]{section.6}{Contributions}{}% 18
+\BOOKMARK [3][-]{subsubsection.3.3.8}{Single-drug vs Multi-drug prediction}{subsection.3.3}% 16
+\BOOKMARK [1][-]{section.4}{Final Performance}{}% 17
+\BOOKMARK [1][-]{section.5}{Conclusion and Future Work}{}% 18
+\BOOKMARK [1][-]{section.6}{Contributions}{}% 19
